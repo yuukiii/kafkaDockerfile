@@ -1,0 +1,16 @@
+version: '3.1'
+services:
+  zookeeper:
+    image: zookeeper
+    ports:
+      - "2181:2181"
+  kafka:
+    build: .
+    ports:
+      - "9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: 0.0.0.0
+      KAFKA_CREATE_TOPICS: "auth:1:1,loginevents.dev:1:1,auth.mobile.dev:1:1,sendPayment.mobile.dev:1:1,receivePayment.mobile.dev:1:1,sendPayment2:1:1,contact:1:1,registration:1:1"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
